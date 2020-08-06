@@ -9,7 +9,8 @@ function Week({ startOfWeek, currentDate }) {
 
   for (let i = 0; i < 7; i++) {
     daysOfWeek.push(add(startOfWeek, { days: 1 }));
-    console.log(daysOfWeek[i]);
+    const d = add(new Date(), { days: 1 });
+    console.log(d);
   }
 
   return (
