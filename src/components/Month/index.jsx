@@ -10,7 +10,6 @@ function Month(props) {
     start: startOfMonth(currentDate),
     end: endOfMonth(currentDate),
   });
-  console.log(weeksOfMonth);
   return (
     <table>
       <caption className={styles.rightBlock__title}>

@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from '../Month/Month.module.scss';
 import Day from '../Day';
-import { format, add } from 'date-fns/esm/fp';
+import { add } from 'date-fns';
 
 function Week({ startOfWeek, currentDate }) {
   const daysOfWeek = [];
 
   for (let i = 0; i < 7; i++) {
     daysOfWeek.push(add(startOfWeek, { days: 1 }));
-    const d = add(new Date(), { days: 1 });
-    console.log(d);
   }
 
   return (
@@ -20,7 +18,7 @@ function Week({ startOfWeek, currentDate }) {
           <td>
             <Day
               key={`${day}${i}`}
-              date={currentDate}
+              date={add(day, { days: i })}
               currentDate={currentDate}
               className={`${style.rightBlock__item}`}
             />
