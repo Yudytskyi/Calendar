@@ -4,5 +4,14 @@ $white: #ffffff;
 
 $textActive: #ec1c57;
 $text: #38a6a0;
-$text2: #d2f4f2;
-$cellSize: 40px;
+$text2: #c0bfc1;
+$cellSize: 35px;
+
+.is-current {
+  color: $textActive;
+  border-color: $textActive;
+}
+
+.is-not-current-month {
+  opacity: 0.5;
+}

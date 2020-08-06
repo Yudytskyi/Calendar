@@ -1,0 +1,9 @@
+{
+    "prettier.arrowParens": "avoid",
+    "prettier.htmlWhitespaceSensitivity": "strict",
+    "prettier.printWidth": 120,
+    "prettier.proseWrap": "always",
+    "prettier.singleQuote": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+}

@@ -1,0 +1,28 @@
+@import '../../styles/index.scss';
+@import '../Calendar/Calendar.module.scss';
+
+.rightBlock {
+  font-weight: 500;
+  &__title {
+    font-weight: 600;
+    color: $text;
+  }
+  &__subtitle {
+    font-size: 1.3rem;
+    color: $textActive;
+    line-height: 3em;
+  }
+  &__item {
+    border: 5px solid;
+  }
+}
+
+.contentTable {
+  color: #b8b8b8;
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+}
