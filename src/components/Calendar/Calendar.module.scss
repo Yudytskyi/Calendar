@@ -1,23 +1,23 @@
-@import '../../styles/index.scss';
+@import '../Calendar/common/styles/vars';
 
 body {
   display: flex;
   justify-content: center;
   font-family: sans-serif;
-  color: $text2;
+  color: $dateTextColor;
 }
 
 .contentContainer {
   display: flex;
-  flex-wrap: wrap;
   margin: 50px 20px;
-  border: 10px solid $border;
+  border: 10px solid $accentBorderColor;
   text-transform: uppercase;
   font-weight: bold;
 }
 
 .leftBlock,
 .rightBlock {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +47,7 @@ body {
   }
 }
 .leftBlock {
-  background-color: $background;
+  background-color: $accentBgColor;
   color: $white;
   font-weight: 300;
 

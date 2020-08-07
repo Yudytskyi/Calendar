@@ -1,0 +1,23 @@
+@import '../common/styles/vars';
+
+.date {
+  box-sizing: border-box;
+  height: $cellSize;
+  width: $cellSize;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0.5;
+}
+
+.currentDate {
+  color: $textActive;
+}
+
+.selectedDate {
+  border: 5px solid;
+  border-radius: 50%;
+}
+
+.currentMonth {
+  opacity: 1;
+}
