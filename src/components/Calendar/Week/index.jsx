@@ -1,28 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CalendarDate from '../CalendarDate';
-import { startOfWeek, addDays, format } from 'date-fns';
+import { format, eachDayOfInterval, startOfWeek, endOfWeek } from 'date-fns';
 
-const getWeekDates = ({ date, currentDate, setSelectedDate, selectedDate }) => {
-  const weekDays = [];
-  const start = startOfWeek(date);
-  for (let i = 0; i < 7; ++i) {
-    const dayDate = addDays(start, i);
-    weekDays.push(
-      <CalendarDate
-        key={format(dayDate, 'yyy-MM-dd')}
-        date={dayDate}
-        currentDate={currentDate}
-        setSelectedDate={setSelectedDate}
-        selectedDate={selectedDate}
-      />
-    );
-  }
-  return weekDays;
-};
+import styles from './Week.module.scss';
 
 function Week(props) {
-  return <tr>{getWeekDates(props)}</tr>;
+  const {
+    date,
+    currentDate,
+    setSelectedDate,
+    classNameStr,
+    isShow,
+    isShow: { month, calendarDate },
+    setIsShow,
+  } = props;
+
+  const daysOfInterval = eachDayOfInterval({
+    start: startOfWeek(currentDate),
+    end: endOfWeek(currentDate),
+  });
+
+  return (
+    <div className={styles.week}>
+      <p
+        onDoubleClick={() => {
+          setIsShow({ ...isShow, month: !month });
+        }}
+        className={styles.week__title}
+      >
+        {format(date, 'MMMM Y')}
+      </p>
+      <div className={styles.content}>
+        {daysOfInterval.map(dey => {
+          return (
+            <p
+              key={format(dey, 'YYY-MMM-d')}
+              className={classNameStr(dey)}
+              onClick={e => {
+                e.stopPropagation();
+                setSelectedDate(dey);
+              }}
+              onDoubleClick={() => {
+                setIsShow({ ...isShow, calendarDate: !calendarDate });
+              }}
+            >
+              {format(dey, 'd EEEE')}
+            </p>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 Week.propTypes = {

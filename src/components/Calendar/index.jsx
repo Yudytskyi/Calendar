@@ -1,31 +1,51 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import classNames from 'classnames';
+import { isSameMonth, isSameDay } from 'date-fns';
 
 import styles from './Calendar.module.scss';
+
+import Year from './Year';
 import Month from './Month';
+import Week from './Week';
+import CalendarDate from './CalendarDate';
 
 const Calendar = props => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isShow, setIsShow] = useState({
+    year: false,
+    month: true,
+    week: false,
+    calendarDate: true,
+  });
+  const { year, month, week, calendarDate } = isShow;
 
   const { currentDate } = props;
 
+  const classNameStr = dey => {
+    return classNames('item', {
+      [styles.currentDate]: isSameDay(dey, currentDate),
+      [styles.otherMonth]: !isSameMonth(dey, currentDate),
+      [styles.selectedDate]: isSameDay(dey, selectedDate),
+    });
+  };
+
+  const commonProps = {
+    classNameStr: classNameStr,
+    date: currentDate,
+    currentDate: currentDate,
+    setSelectedDate: setSelectedDate,
+    selectedDate: selectedDate,
+    setIsShow: setIsShow,
+    isShow: isShow,
+  };
+
   return (
     <article className={styles.contentContainer}>
-      <section className={styles.leftBlock}>
-        <span className={styles.leftBlock__title}>{format(selectedDate, 'EEEE')}</span>
-        <span className={styles.leftBlock__content}>{format(selectedDate, 'd')}</span>
-      </section>
-      <section className={styles.rightBlock}>
-        {
-          <Month
-            date={currentDate}
-            currentDate={currentDate}
-            setSelectedDate={setSelectedDate}
-            selectedDate={selectedDate}
-          />
-        }
-      </section>
+      {calendarDate && <CalendarDate {...commonProps} />}
+      {month && <Month {...commonProps} />}
+      {week && <Week {...commonProps} />}
+      {year && <Year {...commonProps} />}
     </article>
   );
 };

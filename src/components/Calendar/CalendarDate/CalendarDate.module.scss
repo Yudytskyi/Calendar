@@ -1,23 +1,35 @@
-@import '../common/styles/vars';
+@import '../common/commonStyles';
 
-.date {
-  box-sizing: border-box;
-  height: $cellSize;
-  width: $cellSize;
-  text-align: center;
-  vertical-align: middle;
-  opacity: 0.5;
-}
+.calendarDate {
+  flex: 1;
+  min-width: 300px;
+  min-height: $minWidth;
+  padding: 60px 20px;
 
-.currentDate {
-  color: $textActive;
-}
+  @include flexCenter(column, space-between);
+  background-color: $accentBgColor;
 
-.selectedDate {
-  border: 5px solid;
-  border-radius: 50%;
-}
+  color: $white;
+  font-weight: 300;
 
-.currentMonth {
-  opacity: 1;
+  & * {
+    margin: 0;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+  &__subtitle {
+    padding: 0 20px 30px;
+    font-size: 1rem;
+    line-height: 100%;
+    text-transform: capitalize;
+  }
+
+  &__content {
+    overflow: hidden;
+    font-size: 15rem;
+    line-height: 0.75em;
+  }
 }

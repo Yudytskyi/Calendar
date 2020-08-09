@@ -1,54 +1,74 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { eachWeekOfInterval, startOfMonth, endOfMonth, format } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek } from 'date-fns';
 
 import styles from './Month.module.scss';
-import Week from '../Week';
 
 function Month(props) {
-  const { date, currentDate, setSelectedDate, selectedDate } = props;
-  const monthWeeks = eachWeekOfInterval({
-    start: startOfMonth(date),
-    end: endOfMonth(date),
+  const {
+    currentDate,
+    setSelectedDate,
+    classNameStr,
+    isShow,
+    isShow: { year, week, calendarDate },
+    setIsShow,
+  } = props;
+
+  const daysOfWeek = [
+    <p key="1">s</p>,
+    <p key="2">m</p>,
+    <p key="3">t</p>,
+    <p key="4">w</p>,
+    <p key="5">t</p>,
+    <p key="6">f</p>,
+    <p key="7">s</p>,
+  ];
+
+  const daysOfInterval = eachDayOfInterval({
+    start: startOfWeek(startOfMonth(currentDate)),
+    end: endOfWeek(endOfMonth(currentDate)),
   });
+
   return (
-    <table>
-      <caption className={styles.rightBlock__title}>{format(date, 'MMMM Y')}</caption>
-      <thead className={styles.rightBlock__subtitle}>
-        <tr>
-          <th>s</th>
-          <th>m</th>
-          <th>t</th>
-          <th>w</th>
-          <th>t</th>
-          <th>f</th>
-          <th>s</th>
-        </tr>
-      </thead>
-      <tbody>
-        {monthWeeks.map((sun, i) => {
-          return (
-            <Week
-              setSelectedDate={setSelectedDate}
-              key={format(sun, 'YYY-I')}
-              date={sun}
-              currentDate={currentDate}
-              selectedDate={selectedDate}
-            />
-          );
-        })}
-      </tbody>
-    </table>
+    <div className={styles.month}>
+      <div
+        className={styles.month__title}
+        onDoubleClick={() => {
+          setIsShow({ ...isShow, year: !year });
+        }}
+      >
+        {format(currentDate, 'MMMM Y')}
+      </div>
+      <div>
+        <div className={styles.content__title} onDoubleClick={() => setIsShow({ ...isShow, week: !week })}>
+          {daysOfWeek}
+        </div>
+        <div className={styles.content} onDoubleClick={() => setIsShow({ ...isShow, calendarDate: !calendarDate })}>
+          {daysOfInterval.map(dey => {
+            return (
+              <div key={format(dey, 'YYY-MMM-d')} onClick={() => setSelectedDate(dey)} className={classNameStr(dey)}>
+                {format(dey, 'd')}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 
 Month.propTypes = {
-  date: PropTypes.instanceOf(Date),
   currentDate: PropTypes.instanceOf(Date),
+  setSelectedDate: PropTypes.func.isRequired,
+  classNameStr: PropTypes.func.isRequired,
+  isShow: PropTypes.object.isRequired,
+  year: PropTypes.string,
+  week: PropTypes.string,
+  calendarDate: PropTypes.string,
+  setIsShow: PropTypes.func.isRequired,
 };
 
 Month.defaultProps = {
-  date: new Date(),
   currentDate: new Date(),
 };
 

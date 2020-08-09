@@ -1,30 +1,54 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { format, isSameDay, isSameMonth } from 'date-fns';
+import { format } from 'date-fns';
+
 import styles from './CalendarDate.module.scss';
 
-function CalendarDate({ date, currentDate, className, setSelectedDate, selectedDate }) {
-  const classNameStr = classNames(className, {
-    [styles.currentDate]: isSameDay(date, currentDate),
-    [styles.currentMonth]: isSameMonth(date, currentDate),
-    [styles.selectedDate]: isSameDay(date, selectedDate),
-  });
-
+function CalendarDate(props) {
+  const {
+    selectedDate,
+    isShow,
+    isShow: { year, month, week, calendarDate },
+    setIsShow,
+  } = props;
   return (
-    <td onClick={() => setSelectedDate(date)} className={classNameStr}>
-      {format(date, 'd')}
-    </td>
+    <div className={styles.calendarDate}>
+      <p
+        className={styles.calendarDate__title}
+        onDoubleClick={() => {
+          setIsShow({ ...isShow, week: !week });
+        }}
+      >
+        {format(selectedDate, 'EEEE')}
+      </p>
+      <p
+        className={styles.calendarDate__content}
+        onDoubleClick={() => {
+          if (year || month || week) {
+            setIsShow({ ...isShow, calendarDate: !calendarDate });
+          }
+        }}
+      >
+        {format(selectedDate, 'd')}
+      </p>
+      <p
+        className={styles.calendarDate__subtitle}
+        onDoubleClick={() => {
+          setIsShow({ ...isShow, month: !month });
+        }}
+      >
+        {format(selectedDate, 'MMMM YYY')}
+      </p>
+    </div>
   );
 }
 
 CalendarDate.propTypes = {
-  date: PropTypes.object.isRequired,
-  className: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
 };
 
 CalendarDate.defaultProps = {
-  className: styles.date,
+  date: new Date(),
 };
 
 export default CalendarDate;
